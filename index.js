@@ -1,6 +1,14 @@
 const express = require('express');
 const fetch = require('node-fetch');
+var cors = require('cors');
 const app = express();
+
+var corsOptions = {
+	origin: 'https://utkarshpathrabe.github.io/',
+	optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors());
 
 app.get('/hackerrank_badges', function (req, res) {
 	fetch('https://www.hackerrank.com/rest/hackers/UtkarshPathrabe/badges')
