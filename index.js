@@ -11,11 +11,37 @@ var corsOptions = {
 app.use(cors());
 
 app.get('/hackerrank_badges', function (req, res) {
-	fetch('https://www.hackerrank.com/rest/hackers/UtkarshPathrabe/badges')
+	fetch('https://www.hackerrank.com/rest/hackers/UtkarshPathrabe/badges', {
+		method: 'GET',
+		headers: { 'Content-type': 'application/json;charset=UTF-8' },
+	})
 		.then((response) => response.json())
 		.then((json) => res.send(json))
 		.catch((err) => {
 			console.log('Error in hackerrank_badges. Details: ', err);
+			res.send('Error');
+		});
+});
+
+const leetcodePostBody = {
+	operationName: 'getUserProfile',
+	variables: {
+		username: 'Utkarsh_Pathrabe',
+	},
+	query:
+		'query getUserProfile($username: String!) {\nallQuestionsCount {\ndifficulty\ncount\n}\nmatchedUser(username: $username) {\nusername\nprofile {\nstarRating\nranking\n}\nsubmissionCalendar\nsubmitStats {\nacSubmissionNum {\ndifficulty\ncount\nsubmissions\n}\ntotalSubmissionNum {\ndifficulty\ncount\nsubmissions\n}\n}\n}\n}\n',
+};
+
+app.get('/leetcode_data', function (req, res) {
+	fetch('https://leetcode.com/graphql', {
+		method: 'POST',
+		body: JSON.stringify(leetcodePostBody),
+		headers: { 'Content-type': 'application/json;charset=UTF-8' },
+	})
+		.then((response) => response.json())
+		.then((json) => res.send(json))
+		.catch((err) => {
+			console.log('Error in leetcode_data. Details: ', err);
 			res.send('Error');
 		});
 });
