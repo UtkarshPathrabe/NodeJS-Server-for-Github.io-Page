@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', function (req, res) {
-	res.send('Hello World! Cloud Foundry Node JS Demo');
+	res.send('Hello World! Heroku Node JS Demo');
 });
 
 const port = process.env.PORT || 5000;
