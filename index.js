@@ -23,6 +23,34 @@ app.get('/hackerrank_badges', function (req, res) {
 		});
 });
 
+app.get('/hackerrank_scores', function (req, res) {
+	fetch('https://www.hackerrank.com/rest/hackers/UtkarshPathrabe/scores_elo', {
+		method: 'GET',
+		headers: { 'Content-type': 'application/json;charset=UTF-8' },
+	})
+		.then((response) => response.json())
+		.then((json) => {
+			const scoresData = [];
+			for (let i = 0; i < json.length; i++) {
+				if (
+					json[i].hasOwnProperty('practice') &&
+					json[i].practice.hasOwnProperty('score') &&
+					json[i].practice.score > 0
+				) {
+					scoresData.push({
+						name: json[i].name,
+						score: json[i].practice.score,
+					});
+				}
+			}
+			res.send(scoresData);
+		})
+		.catch((err) => {
+			console.log('Error in hackerrank_scores. Details: ', err);
+			res.send('Error');
+		});
+});
+
 const getDateDiffInDays = (date2, date1) =>
 	Math.ceil(
 		Math.abs(new Date(date2) - new Date(date1)) / (1000 * 60 * 60 * 24),
