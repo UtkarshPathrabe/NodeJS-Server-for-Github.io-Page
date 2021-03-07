@@ -23,6 +23,32 @@ app.get('/hackerrank_badges', function (req, res) {
 		});
 });
 
+app.get('/hackerrank_submission_histories', function (req, res) {
+	fetch(
+		'https://www.hackerrank.com/rest/hackers/UtkarshPathrabe/submission_histories',
+		{
+			method: 'GET',
+			headers: { 'Content-type': 'application/json;charset=UTF-8' },
+		},
+	)
+		.then((response) => response.json())
+		.then((json) => {
+			const availableTimeStamps = Object.keys(json).sort();
+			const submissionsData = [];
+			for (let i = 0; i < availableTimeStamps.length; i++) {
+				submissionsData.push([
+					new Date(availableTimeStamps[i]).getTime(),
+					parseInt(json[availableTimeStamps[i]]),
+				]);
+			}
+			res.send(submissionsData);
+		})
+		.catch((err) => {
+			console.log('Error in hackerrank_badges. Details: ', err);
+			res.send('Error');
+		});
+});
+
 const leetcodePostBody = {
 	operationName: 'getUserProfile',
 	variables: {
