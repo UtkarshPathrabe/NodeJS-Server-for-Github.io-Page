@@ -23,6 +23,11 @@ app.get('/hackerrank_badges', function (req, res) {
 		});
 });
 
+const getDateDiffInDays = (date2, date1) =>
+	Math.ceil(
+		Math.abs(new Date(date2) - new Date(date1)) / (1000 * 60 * 60 * 24),
+	);
+
 app.get('/hackerrank_submission_histories', function (req, res) {
 	fetch(
 		'https://www.hackerrank.com/rest/hackers/UtkarshPathrabe/submission_histories',
@@ -36,10 +41,32 @@ app.get('/hackerrank_submission_histories', function (req, res) {
 			const availableTimeStamps = Object.keys(json).sort();
 			const submissionsData = [];
 			for (let i = 0; i < availableTimeStamps.length; i++) {
+				if (
+					i > 0 &&
+					getDateDiffInDays(
+						availableTimeStamps[i],
+						availableTimeStamps[i - 1],
+					) > 1
+				) {
+					const currentDate = new Date(availableTimeStamps[i]);
+					currentDate.setDate(currentDate.getDate() - 1);
+					submissionsData.push([currentDate.getTime(), 0]);
+				}
 				submissionsData.push([
 					new Date(availableTimeStamps[i]).getTime(),
 					parseInt(json[availableTimeStamps[i]]),
 				]);
+				if (
+					i < availableTimeStamps.length - 1 &&
+					getDateDiffInDays(
+						availableTimeStamps[i + 1],
+						availableTimeStamps[i],
+					) > 1
+				) {
+					const currentDate = new Date(availableTimeStamps[i]);
+					currentDate.setDate(currentDate.getDate() + 1);
+					submissionsData.push([currentDate.getTime(), 0]);
+				}
 			}
 			res.send(submissionsData);
 		})
