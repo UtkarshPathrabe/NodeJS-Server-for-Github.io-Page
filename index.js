@@ -110,7 +110,7 @@ const leetcodePostBody = {
 		username: 'Utkarsh_Pathrabe',
 	},
 	query:
-		'query getUserProfile($username: String!) {\nallQuestionsCount {\ndifficulty\ncount\n}\nmatchedUser(username: $username) {\nusername\nprofile {\nstarRating\nranking\n}\nsubmissionCalendar\nsubmitStats {\nacSubmissionNum {\ndifficulty\ncount\nsubmissions\n}\ntotalSubmissionNum {\ndifficulty\ncount\nsubmissions\n}\n}\n}\n}\n',
+		'query getUserProfile($username: String!) {\nallQuestionsCount {\ndifficulty\ncount\n}\nmatchedUser(username: $username) {\nusername\nprofile {\nstarRating\nranking\n}\nsubmissionCalendar\nbadges {\nid\ndisplayName\nicon\ncreationDate\nmedal{\nslug\nconfig{\nicon\niconGif\niconGifBackground\niconWearing\n__typename\n}\n __typename\n}\n__typename\n}\n\nsubmitStats {\nacSubmissionNum {\ndifficulty\ncount\nsubmissions\n}\ntotalSubmissionNum {\ndifficulty\ncount\nsubmissions\n}\n}\n}\n}\n',
 };
 
 app.get('/leetcode_data', function (req, res) {
