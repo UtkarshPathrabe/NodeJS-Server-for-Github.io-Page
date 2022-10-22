@@ -1,3 +1,3 @@
-# NodeJS Server for Github.io Page
+# NodeJS Server for Personal Website
 
-NodeJS server that exposes data for my github.io page via REST APIs deployed on Heroku
+NodeJS server that exposes data for my personal website via REST APIs.
