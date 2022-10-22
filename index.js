@@ -129,7 +129,7 @@ app.get('/leetcode_data', function (req, res) {
 
 app.get('/', function (req, res) {
 	res.send(
-		'Hello World! Heroku Node JS application for my Github.io Page https://utkarshpathrabe.github.io/',
+		'Hello World! Node JS application for my <a href="https://utkarshpathrabe.com/">Personal Website</a>',
 	);
 });
 
